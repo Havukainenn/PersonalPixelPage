@@ -1,38 +1,94 @@
+/* src/App.css */
+
+/* General Layout */
+body {
+  background-color: #000;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  min-height: 100vh;  /* Ensure body takes the full viewport height */
+  display: block;
+  overflow: auto;  /* Allow scrolling */
+}
+
+html, body {
+  height: 100%;  /* Full height for body and html */
+  margin: 0;
+  padding: 0;
+}
+
+/* Center everything in the middle of the screen */
 .App {
   text-align: center;
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 20px;  /* Add some padding to ensure the content is spaced well */
+  min-height: 100vh;  /* Ensure the app takes full height */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Page transitions */
+.page {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.page-enter {
+  opacity: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Non-fixed Navbar */
+nav {
+  background-color: #3700ff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 20px;  /* Add some space below the navbar */
+  width: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);  /* Add shadow to separate navbar from content */
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 15px;  /* Space between the nav items */
+}
+
+nav ul li a {
   color: white;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+nav ul li a:hover {
+  text-decoration: underline;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Welcome Text Styles */
+h1 {
+  font-size: 36px;
+  margin-top: 0;
+}
+
+/* Stars animation remains unchanged */
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: twinkling 3s infinite alternate;
+}
+
+
+@keyframes twinkling {
+  0% {
+    opacity: 0.5;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1;
   }
 }

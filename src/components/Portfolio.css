@@ -1,0 +1,54 @@
+/* src/components/Portfolio.css */
+
+.portfolio-container {
+  padding: 20px;
+  text-align: center;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;  /* Ensure padding and border are included in the element's width and height */
+}
+
+.projects-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;  /* Add some spacing at the top of the grid */
+  flex-grow: 1; /* Allow the grid to grow and take up remaining space */
+}
+
+.project-card {
+  background-color: #333;
+  border: 2px solid #fff;
+  padding: 15px;
+  width: 200px;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.project-image {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+h2, p {
+  color: #fff;
+}
+
+/* Add a footer to give extra space at the bottom */
+footer {
+  margin-top: 40px;   /* Add some space between the content and the footer */
+  padding-bottom: 40px;  /* Add bottom padding for extra space */
+  color: white;
+  font-size: 14px;
+}

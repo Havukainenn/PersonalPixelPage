@@ -1,0 +1,72 @@
+/* src/components/About.css */
+
+/* Container for the about page */
+.about-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    min-height: 100vh;
+  }
+  
+  /* Styling for the card layout */
+  .card {
+    background-color: #333;
+    border: 2px solid #fff;
+    padding: 20px;
+    margin: 20px;
+    width: 350px;  /* Fixed width for the card */
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    word-wrap: break-word;  /* Ensure long text breaks into the next line */
+    overflow-wrap: break-word;  /* Same as word-wrap for long words */
+    margin-top: 200px;
+  }
+  
+  .card h2 {
+    color: #3700ff; /* Retro-themed title color */
+    margin-bottom: 20px;
+  }
+  
+  .card p {
+    color: #fff;
+    font-size: 14px;   /* Slightly smaller font size to fit text */
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+  
+  .card a {
+    color: #fff;
+    text-decoration: none;
+    word-wrap: break-word;  /* Ensure long URLs break into the next line */
+    overflow-wrap: break-word;
+  }
+  
+  .card a:hover {
+    text-decoration: underline;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Responsive adjustments: stack cards vertically on smaller screens */
+  @media (max-width: 768px) {
+    .about-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card {
+      width: 100%;
+      max-width: 350px;
+    }
+  }
+  
