@@ -14,7 +14,7 @@ function Home() {
         <img src="/images/astro.png" alt="Astronaut" className="astronaut-image" />
         {/* Add the button with navigation to the game */}
         <button className="action-button" onClick={() => navigate('/game')}>
-          Play
+          PLAY
         </button>
       </div>
     </div>

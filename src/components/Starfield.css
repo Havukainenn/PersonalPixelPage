@@ -1,18 +1,75 @@
-/* Add to the body or star layers */
-body {
-  background: linear-gradient(180deg, #000022, #000000);
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
+/* src/components/Starfield.css */
+
+/* Pixelated Star styles */
+.star {
+  position: absolute;
+  background-color: white;
+  width: 2px;    /* Small rectangular size for a pixelated effect */
+  height: 2px;   /* Make height and width the same for square stars */
+  image-rendering: pixelated;  /* Force the rendering to be pixelated */
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Subtle glow to mimic 8-bit game stars */
+  animation: twinkling 3s infinite alternate;
 }
 
-@keyframes gradientShift {
+/* Twinkling animation remains the same */
+@keyframes twinkling {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    opacity: 0.5;
   }
   100% {
-    background-position: 0% 50%;
+    opacity: 1;
   }
 }
+
+
+/* Planets - ensuring they stay in the background */
+.planet {
+  position: absolute;
+  z-index: -2;  /* Lower z-index to keep planets behind other content */
+}
+
+/* Planet 1 */
+.planet1 {
+  top: 20%;
+  left: 10%;
+  width: 150px;
+  animation: rotate 120s linear infinite, bob 15s ease-in-out infinite;
+}
+
+/* Planet 2 */
+.planet2 {
+  top: 70%;
+  left: 80%;
+  width: 120px;
+  animation: rotate 150s linear infinite, bob 15s ease-in-out infinite;
+}
+
+/* Planet 3 */
+.planet3 {
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  transform: translate(-50%, -50%);
+  animation: rotate 100s linear infinite, bob 12s ease-in-out infinite;
+}
+
+/* Slow rotation for planets */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Gentle bobbing animation */
+@keyframes bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+

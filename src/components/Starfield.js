@@ -1,26 +1,48 @@
 // src/components/Starfield.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import './Starfield.css';
 
 const Starfield = () => {
+  const [stars, setStars] = useState([]);
+
   useEffect(() => {
     const starCount = 100; // Number of stars
-    const body = document.querySelector('body');
+    const starsArray = [];
 
     for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      
-      // Random position for the stars
-      star.style.width = `${Math.random() * 3 + 1}px`; // Random size
-      star.style.height = star.style.width;
-      star.style.top = `${Math.random() * 100}vh`;
-      star.style.left = `${Math.random() * 100}vw`;
-      
-      body.appendChild(star);
+      const size = Math.floor(Math.random() * 3 + 1);  // Random size for each star
+      starsArray.push({
+        id: i,
+        size: size,
+        top: Math.random() * 100,  // Random vertical position
+        left: Math.random() * 100, // Random horizontal position
+      });
     }
+
+    setStars(starsArray);  // Store the star data in state
   }, []);
 
-  return null;
+  return (
+    <>
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="star"
+          style={{
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            top: `${star.top}vh`,
+            left: `${star.left}vw`,
+          }}
+        />
+      ))}
+
+      {/* Planets */}
+      <img src="/images/planet1.png" alt="Planet 1" className="planet planet1" />
+      <img src="/images/planet2.png" alt="Planet 2" className="planet planet2" />
+      <img src="/images/planet3.png" alt="Planet 3" className="planet planet3" />
+    </>
+  );
 };
 
 export default Starfield;

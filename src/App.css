@@ -8,7 +8,7 @@ body {
   margin: 0;
   min-height: 100vh;  /* Ensure body takes the full viewport height */
   display: block;
-  overflow: auto;  /* Allow scrolling */
+  overflow-x: hidden;  /* Prevent horizontal scrollbars */
 }
 
 html, body {
@@ -17,14 +17,13 @@ html, body {
   padding: 0;
 }
 
-/* Center everything in the middle of the screen */
 .App {
   text-align: center;
-  width: 80%;
-  max-width: 1200px;
+  width: 100%;  /* Set the width to 100% to avoid restriction */
+  max-width: 100%;  /* Remove max-width limitation */
   margin: 0 auto;
-  padding-top: 20px;  /* Add some padding to ensure the content is spaced well */
-  min-height: 100vh;  /* Ensure the app takes full height */
+  padding-top: 20px;
+  min-height: 100vh;
 }
 
 /* Page transitions */
@@ -74,21 +73,3 @@ h1 {
   margin-top: 0;
 }
 
-/* Stars animation remains unchanged */
-.star {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-  animation: twinkling 3s infinite alternate;
-}
-
-
-@keyframes twinkling {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}

@@ -4,9 +4,9 @@ import './Portfolio.css';
 
 function Portfolio() {
   const projects = [
-    { title: 'Project 1', description: 'An image-gallery application made with Django', image: '/images/django.png' },
+    { title: 'Image-Gallery', description: 'An image-gallery application made with Django', image: '/images/django.png' },
     { title: 'Project 2', description: 'An 8-bit retro game', image: '/images/placeholder.png' },
-    { title: 'Project 3', description: 'An old-school themed portfolio website', image: '/images/placeholder.png' },
+    { title: 'Retro Website', description: 'An old-school themed portfolio website', image: '/images/placeholder.png' },
   ];
 
   return (
