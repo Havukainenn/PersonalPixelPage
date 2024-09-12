@@ -1,4 +1,3 @@
-// src/components/About.js
 import React, { useState, useEffect } from 'react';
 import './About.css';  // Import the CSS file
 
@@ -20,11 +19,19 @@ function About() {
   return (
     <div className="about-page wrapper"> {/* Add wrapper class for flexbox */}
       <div className="about-container">
-        {/* About Me Section */}
-        <div className="card about-me">
+        
+        {/* About Me Section with Retro Window Style */}
+        <div className="card about-me" data-title="About Me">
+          <div className="control-buttons">
+            <span className="control-button"></span>
+            <span className="control-button"></span>
+            <span className="control-button"></span>
+          </div>
+          <span className="close-button">X</span>
           <h2>About Me</h2>
           <p>
-            Hi! I'm Roope, an aspiring IT engineer passionate about web development, mobile apps, and technology. I enjoy learning new technologies and applying my skills to create innovative solutions.
+            Hi! I'm Roope, an aspiring IT engineer passionate about web development, mobile apps, and technology. 
+            I enjoy learning new technologies and applying my skills to create innovative solutions.
           </p>
         </div>
 
@@ -55,8 +62,14 @@ function About() {
         <img src="/images/cloud6.png" alt="Cloud 6" className="cloud cloud6" />
       </div>
 
-      {/* Contact Info Moved to the Bottom */}
-      <div className="contact-info">
+      {/* Contact Info with Retro Window Style */}
+      <div className="card contact-info" data-title="Contact Info">
+        <div className="control-buttons">
+          <span className="control-button"></span>
+          <span className="control-button"></span>
+          <span className="control-button"></span>
+        </div>
+        <span className="close-button">X</span>
         <h2>Contact Info</h2>
         <p>Email: roopehavukainen@hotmail.com</p>
         <p>Phone: +358-408-240-055</p>

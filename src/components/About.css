@@ -1,7 +1,7 @@
 /* Main container for the about page */
 .about-page {
   position: relative;
-  min-height: 300vh;  /* Extend the page height for scrolling */
+  min-height: 300vh;
   background-color: transparent;
   overflow-x: hidden;
 }
@@ -9,27 +9,88 @@
 /* About container */
 .about-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 40px 20px;
   color: white;
   font-family: 'Press Start 2P', cursive;
-  min-height: 100vh;  /* Full viewport height */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* About Me Card */
-.about-me {
-  background-color: #333;
-  border: 2px solid #fff;
+/* Flat Retro window style for About Me and Contact Info */
+.card {
+  position: relative;
+  background-color: #e0e0e0; /* Light gray */
+  border: 2px solid black;    /* Strong black border for contrast */
   padding: 20px;
   margin: 20px;
   width: 350px;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  margin-left: 250px;  /* Adjust the left margin to move the box to the right */
+  border-radius: 0; /* No border-radius for a sharper, flat look */
+}
+
+/* Flat Retro window title bar */
+.card:before {
+  content: attr(data-title);
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  background-color: navy; /* Flat navy background */
+  color: white;
+  padding: 5px 10px;
+  text-align: left;
+  font-size: 14px;
+  font-family: 'Press Start 2P', cursive;
+  border: 2px solid black;  /* Consistent strong black border */
+  border-bottom: none;
+}
+
+/* Control buttons with a flat look */
+.control-buttons {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.control-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.control-button:nth-child(1) {
+  background-color: #ff605c; /* Red */
+}
+
+.control-button:nth-child(2) {
+  background-color: #ffbd44; /* Yellow */
+}
+
+.control-button:nth-child(3) {
+  background-color: #00ca4e; /* Green */
+}
+
+/* Close button with a flat look */
+.close-button {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 0 5px;
+  line-height: 18px;
+  border-radius: 0; /* No rounding for a flat look */
+  cursor: pointer;
 }
 
 /* Astronaut container */
@@ -43,7 +104,7 @@
   width: 200px;
   height: auto;
   image-rendering: pixelated;
-  animation: float 4s ease-in-out infinite;  /* Optional float animation */
+  animation: float 4s ease-in-out infinite;
 }
 
 /* Scroll text */
@@ -54,30 +115,15 @@
   font-family: 'Press Start 2P', cursive;
 }
 
-/* Contact Info */
-.contact-info {
-  background-color: #333;
-  border: 2px solid #fff;
-  padding: 20px;
-  margin-top: 1200px;  /* Adjust to move the contact info further down */
-  margin-left: 300px;  /* Adjust the left margin to move it further to the right */
-  width: 500px;
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-}
-
-
 /* Sky background transition */
 .sky-background {
-  position: fixed;  /* Fixed position to stay in place while scrolling */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, #87CEEB, #f5f5dc);  /* Sky gradient */
-  z-index: -1;  /* Keep it behind the content */
+  background: linear-gradient(to bottom, #87CEEB, #f5f5dc);
+  z-index: -1;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -85,7 +131,7 @@
 /* Sun and Clouds */
 .sky-content {
   position: absolute;
-  top: 200vh;  /* Push the sky content further down the page */
+  top: 200vh;
 }
 
 .sun {
@@ -94,112 +140,106 @@
   margin-left: 100px;
   width: 100px;
   height: 100px;
-  /* Make the element circular */
   border-radius: 50%;
-  /* Apply a glow effect using drop-shadow instead of box-shadow */
-  filter: drop-shadow(0 0 20px rgba(255, 223, 0, 0.8)) 
-          drop-shadow(0 0 40px rgba(255, 223, 0, 0.6));
+  filter: none; /* Remove shadows for a flat look */
+  z-index: -1;
 }
-
 
 .cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6 {
   position: absolute;
-  width: 120px;  /* Size for clouds */
-  animation: bobClouds 10s ease-in-out infinite;  /* Smooth bobbing effect */
+  width: 120px;
+  animation: bobClouds 10s ease-in-out infinite;
+  z-index: -1;
 }
 
-.cloud1 {
-  top: 100px;
-  left: 200px;  /* Adjust positions to bring clouds closer together */
-}
-
-.cloud2 {
-  top: 120px;
-  left: 350px;
-}
-
-.cloud3 {
-  top: 140px;
-  left: 500px;
-}
-
-.cloud4 {
-  top: 160px;
-  left: 750px;
-}
-
-.cloud5 {
-  top: 150px;
-  left: 900px;
-}
-
-.cloud6 {
-  top: 200px;
-  left: 1200px;
-}
+/* Adjust positions for clouds */
+.cloud1 { top: 100px; left: 100px; }
+.cloud2 { top: 120px; left: 250px; }
+.cloud3 { top: 140px; left: 400px; }
+.cloud4 { top: 160px; left: 550px; }
+.cloud5 { top: 150px; left: 1200px; }
+.cloud6 { top: 200px; left: 1400px; }
 
 /* Floating animation for astronaut */
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 /* Bobbing animation for clouds */
 @keyframes bobClouds {
-  0%, 100% {
-    transform: translateY(0);  /* Start and end at original position */
-  }
-  50% {
-    transform: translateY(-10px);  /* Move up slightly */
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Ground Element */
+.ground {
+  background-repeat: repeat-x;
+  background-size: contain;
+  height: 50px;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Responsive adjustments for large screens */
+@media (min-width: 1200px) {
+  .contact-info {
+    margin-top: 1800px;
+    margin-left: auto;
+    margin-right: 600px;
+    position: relative;
+    width: 600px;
   }
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-me, .contact-info {
+    width: 80%;
+    max-width: 450px;
+    margin: 20px auto;
+  }
+
+  .contact-info {
+    margin-top: 1200px;
+  }
+}
+
+/* Responsive adjustments for small screens */
 @media (max-width: 768px) {
   .about-container {
     flex-direction: column;
     align-items: center;
   }
 
-  .card {
+  .about-me, .contact-info {
     width: 100%;
-    max-width: 350px;
+    max-width: 250px;
+    margin: 20px auto;
   }
 
   .astro-image {
-    width: 150px;  /* Smaller astronaut on smaller screens */
+    width: 150px;
   }
 
   .scroll-text {
-    font-size: 14px;  /* Smaller text for mobile */
+    font-size: 14px;
   }
 
   .sun, .cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6 {
-    width: 100px;  /* Adjust size for smaller screens */
+    width: 100px;
   }
-  .contact-info{
-    align-items: center;
-    margin-top: 1250px;
+
+  .contact-info {
+    margin-top: 1500px; /* Adjust this value to push it down further on smaller screens */
   }
 }
-
-/* Ground Element */
-.ground {
-  background-repeat: repeat-x; /* Repeat the ground image horizontally */
-  background-size: contain;    /* Ensure the ground image is properly contained */
-  height: 50px;                /* Set a fixed height for the ground */
-  width: 100vw;                /* Full viewport width */
-  position: absolute;          /* Keep the ground fixed at the bottom */
-  bottom: 0;                   /* Align it to the bottom of the page */
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
