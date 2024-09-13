@@ -17,22 +17,19 @@ function About() {
   }, []);
 
   return (
-    <div className="about-page wrapper"> {/* Add wrapper class for flexbox */}
+    <div className="about-page wrapper">
       <div className="about-container">
         
-        {/* About Me Section with Retro Window Style */}
-        <div className="card about-me" data-title="About Me">
-          <div className="control-buttons">
-            <span className="control-button"></span>
-            <span className="control-button"></span>
-            <span className="control-button"></span>
+        {/* About Me Section inside a Monitor */}
+        <div className="monitor-container">
+          <img src="/images/monitor.png" alt="Monitor" className="monitor-image" />
+          <div className="monitor-text">
+            <h2>About Me</h2>
+            <p>
+              Hi! I'm Roope, an aspiring IT-engineering student passionate about web development, mobile apps, and all tech in general. 
+              I enjoy learning new technologies and applying my skills to create innovative solutions.
+            </p>
           </div>
-          <span className="close-button">X</span>
-          <h2>About Me</h2>
-          <p>
-            Hi! I'm Roope, an aspiring IT engineer passionate about web development, mobile apps, and technology. 
-            I enjoy learning new technologies and applying my skills to create innovative solutions.
-          </p>
         </div>
 
         {/* Astronaut and Scroll Message */}
@@ -46,7 +43,7 @@ function About() {
       <div
         className="sky-background"
         style={{
-          opacity: scrollY > 300 ? 1 : 0,  // Fades in the sky effect as you scroll
+          opacity: scrollY > 300 ? 1 : 0,
           transition: 'opacity 1s ease-in-out',
         }}
       />
@@ -62,27 +59,30 @@ function About() {
         <img src="/images/cloud6.png" alt="Cloud 6" className="cloud cloud6" />
       </div>
 
-      {/* Contact Info with Retro Window Style */}
-      <div className="card contact-info" data-title="Contact Info">
-        <div className="control-buttons">
-          <span className="control-button"></span>
-          <span className="control-button"></span>
-          <span className="control-button"></span>
+      {/* Billboard with Contact Info */}
+      <div className="billboard-container">
+        <img src="/images/billboard.png" alt="Billboard" className="billboard-image" />
+        <div className="billboard-text">
+          <p className="billboard-header">Contact Information</p> 
+          <p><i className="nes-icon gmail is-small"></i> roopehavukainen@outlook.com</p>
+          <p><i className="nes-icon whatsapp is-small"></i> +358-408-240-055</p>
+          <p><i className="nes-icon linkedin is-small"></i> <a href="https://www.linkedin.com/in/roope-havukainen" target="_blank" rel="noopener noreferrer">linkedin.com/in/roope</a></p>
+          <p><i className="nes-icon github is-small"></i> <a href="https://github.com/Havukainenn" target="_blank" rel="noopener noreferrer">github.com/Havukainenn</a></p>
         </div>
-        <span className="close-button">X</span>
-        <h2>Contact Info</h2>
-        <p>Email: roopehavukainen@hotmail.com</p>
-        <p>Phone: +358-408-240-055</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/roope-havukainen" target="_blank" rel="noopener noreferrer">linkedin.com/in/roope</a></p>
       </div>
 
-      {/* Ground Element as Footer */}
-      <div 
-        className="ground" 
-        style={{
-          backgroundImage: "url('/images/ground.png')",  // Image path defined inline here
-        }}
-      />
+      {/* Ground Element with Doge and Balloon */}
+      <div className="ground" style={{ backgroundImage: "url('/images/ground.png')" }}>
+        {/* Doge image placed on the ground */}
+        <div className="doge-container">
+          <img src="/images/doge.png" alt="Doge" className="doge-image" />
+
+          {/* Balloon (text bubble) for Doge */}
+          <div className="nes-balloon from-left balloon">
+            <p>Contact me!</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

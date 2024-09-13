@@ -9,7 +9,7 @@
 /* About container */
 .about-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center align the contents */
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 40px 20px;
@@ -17,80 +17,59 @@
   font-family: 'Press Start 2P', cursive;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the container */
 }
 
-/* Flat Retro window style for About Me and Contact Info */
-.card {
+/* Monitor Container */
+.monitor-container {
   position: relative;
-  background-color: #e0e0e0; /* Light gray */
-  border: 2px solid black;    /* Strong black border for contrast */
-  padding: 20px;
-  margin: 20px;
-  width: 350px;
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-  border-radius: 0; /* No border-radius for a sharper, flat look */
+  width: 100%; /* Full width for responsiveness */
+  max-width: 500px; /* Adjust size to match the image */
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
 }
 
-/* Flat Retro window title bar */
-.card:before {
-  content: attr(data-title);
+/* Monitor Image */
+.monitor-image {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated; /* Keep the retro pixelated look */
+}
+
+/* Monitor Text */
+.monitor-text {
   position: absolute;
-  top: -30px;
-  left: 0;
-  right: 0;
-  background-color: navy; /* Flat navy background */
-  color: white;
-  padding: 5px 10px;
-  text-align: left;
+  top: 15%; /* Adjust as needed */
+  left: 10%;
+  width: 80%;
+  color: black; /* Text color for contrast */
+  font-family: 'Press Start 2P', cursive;
   font-size: 14px;
-  font-family: 'Press Start 2P', cursive;
-  border: 2px solid black;  /* Consistent strong black border */
-  border-bottom: none;
+  text-align: center;
 }
 
-/* Control buttons with a flat look */
-.control-buttons {
-  position: absolute;
-  top: 3px;
-  left: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.monitor-text h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.control-button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.control-button:nth-child(1) {
-  background-color: #ff605c; /* Red */
-}
-
-.control-button:nth-child(2) {
-  background-color: #ffbd44; /* Yellow */
-}
-
-.control-button:nth-child(3) {
-  background-color: #00ca4e; /* Green */
-}
-
-/* Close button with a flat look */
-.close-button {
-  position: absolute;
-  top: 3px;
-  right: 10px;
-  background-color: red;
-  color: white;
+.monitor-text p {
   font-size: 12px;
-  padding: 0 5px;
-  line-height: 18px;
-  border-radius: 0; /* No rounding for a flat look */
-  cursor: pointer;
+  line-height: 1.5;
+}
+
+/* Hover Effect for Monitor Container */
+.monitor-container:hover {
+  transform: scale(1.05); /* Slight scaling on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Add a shadow for depth */
+}
+
+/* Glowing border effect */
+.monitor-container:hover .monitor-image {
+  border: 3px solid #3700ff; /* Add glowing retro blue border on hover */
+  box-shadow: 0px 0px 10px #3700ff, 0px 0px 20px #3700ff; /* Glow effect */
 }
 
 /* Astronaut container */
@@ -131,7 +110,7 @@
 /* Sun and Clouds */
 .sky-content {
   position: absolute;
-  top: 200vh;
+  top: 270vh;
 }
 
 .sun {
@@ -141,7 +120,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  filter: none; /* Remove shadows for a flat look */
+  filter: none;
   z-index: -1;
 }
 
@@ -173,6 +152,45 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Billboard Container */
+.billboard-container {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 1800px;
+  margin-bottom: 50px;
+}
+
+.billboard-image {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.billboard-text {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80%;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 13px;
+  text-align: start;
+}
+
+.billboard-header {
+  text-align: center;
+}
+
+.billboard-text a {
+  color: white;
+  text-decoration: none;
+}
+
+.billboard-text a:hover {
+  text-decoration: underline;
+}
+
 /* Ground Element */
 .ground {
   background-repeat: repeat-x;
@@ -185,14 +203,48 @@
   z-index: 1;
 }
 
+/* Doge Container on the Ground */
+.doge-container {
+  position: absolute;
+  bottom: 20px;  /* Adjust this value to set distance from bottom */
+  left: 10%;  /* Center horizontally */
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.doge-image {
+  width: 100px;  /* Adjust size as necessary */
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* Balloon Style (text bubble) */
+.balloon {
+  position: absolute;
+  top: -110px; /* Adjust position above the doge image */
+  left: 60px; /* Adjust horizontal placement */
+  z-index: 3;
+}
+
+.nes-balloon p {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: black;
+}
+
+
 /* Responsive adjustments for large screens */
 @media (min-width: 1200px) {
-  .contact-info {
-    margin-top: 1800px;
-    margin-left: auto;
-    margin-right: 600px;
-    position: relative;
-    width: 600px;
+  .about-me {
+    width: 45%;
+  }
+
+  .astro-container {
+    width: 45%;
+  }
+
+  .billboard-container {
+    margin-top: 2500px;
   }
 }
 
@@ -203,15 +255,29 @@
     align-items: center;
   }
 
-  .about-me, .contact-info {
+  .about-me {
     width: 80%;
     max-width: 450px;
     margin: 20px auto;
   }
 
-  .contact-info {
-    margin-top: 1200px;
+  .astro-container {
+    width: 80%;
+    max-width: 450px;
+    margin: 20px auto;
   }
+
+  .billboard-container {
+    margin-top: 2200px;
+  }
+}
+
+/* Balloon Style (text bubble) */
+.balloon {
+  position: absolute;
+  top: -90px; /* Adjust position above the doge image */
+  left: 60px; /* Adjust horizontal placement */
+  z-index: 3;
 }
 
 /* Responsive adjustments for small screens */
@@ -221,12 +287,23 @@
     align-items: center;
   }
 
-  .about-me, .contact-info {
+  .about-me {
     width: 100%;
     max-width: 250px;
     margin: 20px auto;
   }
+  .monitor-text {
+    font-size: 12px; /* Smaller font size for smaller screens */
+    padding: 5px; /* Adjust padding to fit text within container */
+  }
 
+  .monitor-text p {
+    font-size: 9px;
+  }
+
+  .monitor-container {
+    max-width: 400px;
+  }
   .astro-image {
     width: 150px;
   }
@@ -235,11 +312,30 @@
     font-size: 14px;
   }
 
+  .sky-content {
+    top: 240vh;
+  }
+
   .sun, .cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6 {
     width: 100px;
   }
 
-  .contact-info {
-    margin-top: 1500px; /* Adjust this value to push it down further on smaller screens */
+  .billboard-container {
+    width: 300px;
+    margin-top: 2000px;
   }
+
+  .billboard-text {
+    margin-top: -11px;
+    font-size: 8px;
+  }
+
+  .balloon {
+    display: none;
+  }
+
+  .billboard-header {
+    display: none;
+  }
+
 }
