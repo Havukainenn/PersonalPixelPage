@@ -1,0 +1,8 @@
+/* src/components/Projectile.css */
+
+.projectile {
+    position: absolute;
+    z-index: 2;
+    /* Optional: Add animations or effects */
+  }
+  

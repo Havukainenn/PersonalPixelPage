@@ -63,7 +63,7 @@ function About() {
       <div className="billboard-container">
         <img src="/images/billboard.png" alt="Billboard" className="billboard-image" />
         <div className="billboard-text">
-          <p className="billboard-header">Contact Information</p> 
+          <p className="billboard-header"></p> 
           <p><i className="nes-icon gmail is-small"></i> roopehavukainen@outlook.com</p>
           <p><i className="nes-icon whatsapp is-small"></i> +358-408-240-055</p>
           <p><i className="nes-icon linkedin is-small"></i> <a href="https://www.linkedin.com/in/roope-havukainen" target="_blank" rel="noopener noreferrer">linkedin.com/in/roope</a></p>

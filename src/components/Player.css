@@ -1,0 +1,33 @@
+/* src/components/Player.css */
+
+.player {
+    position: absolute;
+    z-index: 2;
+  }
+  
+  .shield {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 70px;
+    height: 70px;
+    border: 2px solid cyan;
+    border-radius: 50%;
+    animation: shieldPulse 1s infinite;
+  }
+  
+  @keyframes shieldPulse {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

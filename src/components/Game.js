@@ -1,354 +1,404 @@
 // src/components/Game.js
-import React, { useRef, useEffect, useState } from 'react';
-import './Game.css';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Player from './Player';
+import Enemy from './Enemy';
+import Projectile from './Projectile';
+import Starfield from './Starfield';
+import ScoreBoard from './ScoreBoard';
+import GameOver from './GameOver';
+import './Game.css'; // Ensure this file exists and contains necessary styles
 
-function Game() {
-  const canvasRef = useRef(null);
-
-  // Constants
-  const tileSize = 32;
-
-  // Levels data (define before using in state)
-  const levels = [
-    // Level 1
-    {
-      mazeData: [
-        [1,1,1,1,1,1,1],
-        [1,0,2,0,0,3,1],
-        [1,0,1,1,1,0,1],
-        [1,0,1,0,1,0,1],
-        [1,0,1,0,2,0,1],
-        [1,1,1,1,1,1,1],
-      ],
-      enemies: [
-        { x: 3, y: 3, direction: 'vertical', movingDown: true },
-      ],
-    },
-    // Level 2
-    {
-      mazeData: [
-        [1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,2,0,0,3,1],
-        [1,0,1,1,1,1,1,0,1],
-        [1,0,1,0,0,0,1,0,1],
-        [1,0,1,1,1,0,1,0,1],
-        [1,0,0,0,1,0,1,0,1],
-        [1,1,1,0,1,0,1,0,1],
-        [1,1,1,1,1,1,1,1,1],
-      ],
-      enemies: [
-        { x: 4, y: 2, direction: 'horizontal', movingRight: true },
-        { x: 6, y: 5, direction: 'vertical', movingDown: false },
-      ],
-    },
-    // Additional levels can be added here
-  ];
-
-  // Game States
-  const [level, setLevel] = useState(0);
-  const [maze, setMaze] = useState(levels[0].mazeData);
-  const [player, setPlayer] = useState({ x: 1, y: 1 });
+const Game = () => {
+  // ---------------------------
+  // State Variables
+  // ---------------------------
   const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [playerPosition, setPlayerPosition] = useState({
+    x: window.innerWidth / 2 - 25, // Centered horizontally
+    y: window.innerHeight - 100, // Positioned near the bottom
+  });
+  const [projectiles, setProjectiles] = useState([]);
+  const [enemies, setEnemies] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [timer, setTimer] = useState(0);
-  const [enemies, setEnemies] = useState(levels[0].enemies);
-  const [visibility, setVisibility] = useState(
-    levels[0].mazeData.map((row) => row.map(() => false))
-  );
-  const [collectedItems, setCollectedItems] = useState(0);
+  const [canShoot, setCanShoot] = useState(true); // Shooting cooldown
 
-  // Initialize the maze and enemies when level changes
+  // Ref for the game container
+  const gameContainerRef = useRef(null);
+
+  // Ref for Game Loop
+  const animationFrameId = useRef(null);
+  const enemySpawnTimer = useRef(0); // Use ref to persist value across renders
+
+  // Ref to track the latest player position
+  const playerPositionRef = useRef(playerPosition);
+
+  // Update the ref whenever playerPosition changes
   useEffect(() => {
-    if (level >= levels.length) {
-      // No more levels, game completed
-      setGameOver(true);
-    } else {
-      const currentLevel = levels[level];
-      setMaze(currentLevel.mazeData);
-      setEnemies(currentLevel.enemies);
-      setPlayer({ x: 1, y: 1 });
-      setVisibility(currentLevel.mazeData.map((row) => row.map(() => false)));
-      setCollectedItems(0);
-    }
-  }, [level]);
+    playerPositionRef.current = playerPosition;
+  }, [playerPosition]);
 
-  // Handle player movement
+  // Maximum number of enemies on screen
+  const MAX_ENEMIES = 5; // Adjust as needed
+
+  // ---------------------------
+  // Movement State
+  // ---------------------------
+  const [keysPressed, setKeysPressed] = useState({
+    ArrowLeft: false,
+    ArrowRight: false,
+  });
+
+  // Movement speed in pixels per frame
+  const PLAYER_SPEED = 5;
+
+  // ---------------------------
+  // Collision Detection Constants
+  // ---------------------------
+  const ENEMY_WIDTH = 60;
+  const ENEMY_HEIGHT = 60;
+  const PROJECTILE_WIDTH = 5;
+  const PROJECTILE_HEIGHT = 10;
+  const PLAYER_WIDTH = 50;
+  const PLAYER_HEIGHT = 50;
+
+  // ---------------------------
+  // Sound Effects Setup
+  // ---------------------------
+  const shootSound = useRef(null);
+  const hitSound = useRef(null);
+  const gameOverSound = useRef(null);
+
+  useEffect(() => {
+    // Initialize Audio objects
+    shootSound.current = new Audio('/sounds/shoot.mp3');
+    hitSound.current = new Audio('/sounds/hit.mp3');
+    gameOverSound.current = new Audio('/sounds/gameover.mp3');
+
+    // Optional: Preload audio
+    shootSound.current.preload = 'auto';
+    hitSound.current.preload = 'auto';
+    gameOverSound.current.preload = 'auto';
+
+    // Handle audio loading errors
+    const handleAudioError = (e) => {
+      console.error('Error loading audio:', e);
+    };
+
+    shootSound.current.addEventListener('error', handleAudioError);
+    hitSound.current.addEventListener('error', handleAudioError);
+    gameOverSound.current.addEventListener('error', handleAudioError);
+
+    // Cleanup listeners on unmount
+    return () => {
+      shootSound.current.removeEventListener('error', handleAudioError);
+      hitSound.current.removeEventListener('error', handleAudioError);
+      gameOverSound.current.removeEventListener('error', handleAudioError);
+    };
+  }, []);
+
+  // ---------------------------
+  // Shooting Mechanism
+  // ---------------------------
+  const fireProjectile = useCallback(() => {
+    const currentPosition = playerPositionRef.current;
+    setProjectiles((prev) => [
+      ...prev,
+      { 
+        x: currentPosition.x + (PLAYER_WIDTH / 2) - (PROJECTILE_WIDTH / 2), 
+        y: currentPosition.y 
+      }, // Center the projectile
+    ]);
+    console.log('Projectile fired at:', { 
+      x: currentPosition.x + (PLAYER_WIDTH / 2) - (PROJECTILE_WIDTH / 2), 
+      y: currentPosition.y 
+    });
+    setCanShoot(false); // Disable shooting
+
+    // Play shoot sound
+    if (shootSound.current) {
+      shootSound.current.currentTime = 0; // Reset to start
+      shootSound.current.play().catch((e) => {
+        console.error('Failed to play shoot sound:', e);
+      });
+    }
+
+    // Re-enable shooting after a short delay (e.g., 300ms)
+    setTimeout(() => setCanShoot(true), 300);
+  }, [PLAYER_WIDTH, PROJECTILE_WIDTH]);
+
+  // ---------------------------
+  // Event Handlers
+  // ---------------------------
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (gameOver) return;
-      let newX = player.x;
-      let newY = player.y;
-      if (e.key === 'ArrowUp' || e.key === 'w') {
-        newY -= 1;
-      } else if (e.key === 'ArrowDown' || e.key === 's') {
-        newY += 1;
-      } else if (e.key === 'ArrowLeft' || e.key === 'a') {
-        newX -= 1;
-      } else if (e.key === 'ArrowRight' || e.key === 'd') {
-        newX += 1;
+
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        setKeysPressed((prev) => ({
+          ...prev,
+          [e.key]: true,
+        }));
       }
 
-      // Prevent out-of-bounds errors
-      if (maze[newY] && maze[newY][newX] !== undefined) {
-        const cellValue = maze[newY][newX];
-        if (cellValue !== 1) {
-          // Move player
-          setPlayer({ x: newX, y: newY });
-
-          // Update visibility
-          updateVisibility(newX, newY);
-
-          // Handle collectibles
-          if (cellValue === 2) {
-            setScore((prevScore) => prevScore + 10);
-            setCollectedItems((prevCollectedItems) => prevCollectedItems + 1);
-            // Remove collectible from maze
-            const updatedMaze = maze.map((row) => row.slice());
-            updatedMaze[newY][newX] = 0;
-            setMaze(updatedMaze);
-          }
-
-          // Check for exit
-          if (cellValue === 3) {
-            if (level < levels.length - 1) {
-              // Proceed to next level
-              setLevel((prevLevel) => prevLevel + 1);
-            } else {
-              // Game completed
-              setGameOver(true);
-            }
-          }
+      if (e.key === ' ') {
+        e.preventDefault(); // Prevent default spacebar behavior (scrolling)
+        if (canShoot) {
+          fireProjectile();
         }
       }
     };
+
+    const handleKeyUp = (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        setKeysPressed((prev) => ({
+          ...prev,
+          [e.key]: false,
+        }));
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [maze, gameOver]); // Only re-run if maze or gameOver changes
+    window.addEventListener('keyup', handleKeyUp);
 
-  // Update visibility map
-  const updateVisibility = (x, y) => {
-    const updatedVisibility = visibility.map((row) => row.slice());
-    updatedVisibility[y][x] = true;
-    // Reveal adjacent cells (optional)
-    const adjacentCells = [
-      [x + 1, y],
-      [x - 1, y],
-      [x, y + 1],
-      [x, y - 1],
-    ];
-    adjacentCells.forEach(([adjX, adjY]) => {
-      if (
-        maze[adjY] &&
-        maze[adjY][adjX] !== undefined &&
-        !updatedVisibility[adjY][adjX]
-      ) {
-        updatedVisibility[adjY][adjX] = true;
-      }
-    });
-    setVisibility(updatedVisibility);
-  };
+    // Cleanup
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [canShoot, gameOver, fireProjectile]);
 
-  // Game loop for rendering
+  // ---------------------------
+  // Game Loop
+  // ---------------------------
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-
-    const drawGame = () => {
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw maze
-      for (let y = 0; y < maze.length; y++) {
-        for (let x = 0; x < maze[y].length; x++) {
-          if (visibility[y][x]) {
-            if (maze[y][x] === 1) {
-              // Wall
-              ctx.fillStyle = '#000';
-              ctx.fillRect(
-                x * tileSize,
-                y * tileSize,
-                tileSize,
-                tileSize
-              );
-            } else if (maze[y][x] === 0) {
-              // Path
-              ctx.fillStyle = '#ccc';
-              ctx.fillRect(
-                x * tileSize,
-                y * tileSize,
-                tileSize,
-                tileSize
-              );
-            } else if (maze[y][x] === 2) {
-              // Collectible
-              ctx.fillStyle = '#ccc';
-              ctx.fillRect(
-                x * tileSize,
-                y * tileSize,
-                tileSize,
-                tileSize
-              );
-              ctx.fillStyle = 'gold';
-              ctx.beginPath();
-              ctx.arc(
-                x * tileSize + tileSize / 2,
-                y * tileSize + tileSize / 2,
-                tileSize / 4,
-                0,
-                2 * Math.PI
-              );
-              ctx.fill();
-            } else if (maze[y][x] === 3) {
-              // Exit
-              ctx.fillStyle = 'lightgreen';
-              ctx.fillRect(
-                x * tileSize,
-                y * tileSize,
-                tileSize,
-                tileSize
-              );
-            }
-          } else {
-            // Fog
-            ctx.fillStyle = 'black';
-            ctx.fillRect(
-              x * tileSize,
-              y * tileSize,
-              tileSize,
-              tileSize
-            );
-          }
-        }
+    const spawnEnemy = () => {
+      if (enemies.length >= MAX_ENEMIES) {
+        console.log('Maximum enemies on screen. Skipping spawn.');
+        return; // Do not spawn more than MAX_ENEMIES
       }
 
-      // Draw enemies
-      ctx.fillStyle = 'purple';
-      enemies.forEach((enemy) => {
-        ctx.fillRect(
-          enemy.x * tileSize,
-          enemy.y * tileSize,
-          tileSize,
-          tileSize
+      // Get the container's width
+      const containerWidth = gameContainerRef.current
+        ? gameContainerRef.current.clientWidth
+        : window.innerWidth;
+
+      // Calculate the maximum X position to keep the enemy fully within the container
+      const maxX = containerWidth - ENEMY_WIDTH;
+      
+      // Generate a random X position between 0 and maxX
+      const enemyX = Math.random() * maxX;
+
+      const speed = 1.5 + Math.random() * 1.5; // Enemy speed between 1.5 and 3
+      const id = Date.now(); // Unique identifier
+
+      console.log('Spawning enemy at X:', enemyX, 'with speed:', speed);
+
+      setEnemies((prev) => [
+        ...prev,
+        { x: enemyX, y: -ENEMY_HEIGHT, speed, id }, // Start slightly above the screen
+      ]);
+    };
+
+    const gameLoop = () => {
+      // ---------------------------
+      // Update Player Position
+      // ---------------------------
+      setPlayerPosition((prev) => {
+        let newX = prev.x;
+        if (keysPressed.ArrowLeft) {
+          newX = Math.max(prev.x - PLAYER_SPEED, 0);
+        }
+        if (keysPressed.ArrowRight) {
+          newX = Math.min(prev.x + PLAYER_SPEED, window.innerWidth - PLAYER_WIDTH); // Assuming player width is 50px
+        }
+        return { ...prev, x: newX };
+      });
+
+      // ---------------------------
+      // Update Projectiles
+      // ---------------------------
+      setProjectiles((prev) =>
+        prev
+          .map((proj) => ({ ...proj, y: proj.y - 10 })) // Move projectile upward
+          .filter((proj) => {
+            const isVisible = proj.y > -PROJECTILE_HEIGHT;
+            if (!isVisible) {
+              console.log('Removing off-screen projectile at Y:', proj.y);
+            }
+            return isVisible;
+          }) // Remove projectiles off-screen
+      );
+
+      // ---------------------------
+      // Update Enemies
+      // ---------------------------
+      setEnemies((prev) =>
+        prev
+          .map((enemy) => ({ ...enemy, y: enemy.y + enemy.speed })) // Move enemy downward
+          .filter((enemy) => {
+            const isVisible = enemy.y < window.innerHeight + ENEMY_HEIGHT;
+            if (!isVisible) {
+              console.log('Removing off-screen enemy:', enemy.id);
+            }
+            return isVisible;
+          }) // Remove enemies off-screen
+      );
+
+      // ---------------------------
+      // Spawn Enemies
+      // ---------------------------
+      enemySpawnTimer.current += 1;
+      if (enemySpawnTimer.current > 180) { // Spawn approximately every 3 seconds (assuming 60 FPS)
+        spawnEnemy();
+        enemySpawnTimer.current = 0;
+      }
+
+      // ---------------------------
+      // Collision Detection
+      // ---------------------------
+      // Step 1: Detect collisions between projectiles and enemies
+      const collidedEnemies = new Set();
+      const collidedProjectiles = new Set();
+
+      projectiles.forEach((proj, projIdx) => {
+        enemies.forEach((enemy, enemyIdx) => {
+          if (
+            proj.x < enemy.x + ENEMY_WIDTH &&
+            proj.x + PROJECTILE_WIDTH > enemy.x &&
+            proj.y < enemy.y + ENEMY_HEIGHT &&
+            proj.y + PROJECTILE_HEIGHT > enemy.y
+          ) {
+            collidedEnemies.add(enemy.id);
+            collidedProjectiles.add(projIdx);
+            setScore((prev) => prev + 10);
+            console.log('Projectile hit enemy:', enemy.id);
+
+            // Play hit sound
+            if (hitSound.current) {
+              hitSound.current.currentTime = 0; // Reset to start
+              hitSound.current.play().catch((e) => {
+                console.error('Failed to play hit sound:', e);
+              });
+            }
+          }
+        });
+      });
+
+      // Remove collided enemies
+      if (collidedEnemies.size > 0) {
+        setEnemies((prev) => prev.filter((enemy) => !collidedEnemies.has(enemy.id)));
+      }
+
+      // Remove collided projectiles
+      if (collidedProjectiles.size > 0) {
+        setProjectiles((prev) =>
+          prev.filter((_, idx) => !collidedProjectiles.has(idx))
+        );
+      }
+
+      // Step 2: Detect collisions between player and enemies
+      const collidedWithPlayer = enemies.filter((enemy) => {
+        return (
+          playerPosition.x < enemy.x + ENEMY_WIDTH &&
+          playerPosition.x + PLAYER_WIDTH > enemy.x &&
+          playerPosition.y < enemy.y + ENEMY_HEIGHT &&
+          playerPosition.y + PLAYER_HEIGHT > enemy.y
         );
       });
 
-      // Draw player
-      ctx.fillStyle = '#f00';
-      ctx.fillRect(
-        player.x * tileSize,
-        player.y * tileSize,
-        tileSize,
-        tileSize
-      );
+      if (collidedWithPlayer.length > 0) {
+        console.log('Player collided with enemy(s):', collidedWithPlayer.map(e => e.id));
+        setLives((prevLives) => {
+          const newLives = prevLives - collidedWithPlayer.length;
+          if (newLives <= 0) {
+            setGameOver(true);
+
+            // Play game over sound
+            if (gameOverSound.current) {
+              gameOverSound.current.currentTime = 0; // Reset to start
+              gameOverSound.current.play().catch((e) => {
+                console.error('Failed to play game over sound:', e);
+              });
+            }
+
+            return 0;
+          }
+          return newLives;
+        });
+
+        // Remove collided enemies
+        setEnemies((prev) =>
+          prev.filter((enemy) => !collidedWithPlayer.map(e => e.id).includes(enemy.id))
+        );
+      }
+
+      // Continue the game loop
+      animationFrameId.current = requestAnimationFrame(gameLoop);
     };
 
-    drawGame();
-  }, [maze, player, enemies, visibility]);
+    // Start the game loop
+    animationFrameId.current = requestAnimationFrame(gameLoop);
 
-  // Timer
-  useEffect(() => {
-    let interval;
-    if (!gameOver) {
-      interval = setInterval(() => {
-        setTimer((prevTimer) => prevTimer + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [gameOver]);
+    // Cleanup on component unmount
+    return () => cancelAnimationFrame(animationFrameId.current);
+  }, [keysPressed, playerPosition, projectiles, enemies, score]);
 
-  // Enemy movement
-  useEffect(() => {
-    if (!gameOver) {
-      const interval = setInterval(() => {
-        setEnemies((prevEnemies) =>
-          prevEnemies.map((enemy) => {
-            let { x, y, direction } = enemy;
-            let dx = 0;
-            let dy = 0;
-            if (direction === 'vertical') {
-              dy = enemy.movingDown ? 1 : -1;
-            } else {
-              dx = enemy.movingRight ? 1 : -1;
-            }
-            let newX = x + dx;
-            let newY = y + dy;
-
-            if (
-              maze[newY] &&
-              maze[newY][newX] !== 1 &&
-              maze[newY][newX] !== undefined
-            ) {
-              // Move enemy
-              return { ...enemy, x: newX, y: newY };
-            } else {
-              // Change direction
-              if (direction === 'vertical') {
-                return { ...enemy, movingDown: !enemy.movingDown };
-              } else {
-                return { ...enemy, movingRight: !enemy.movingRight };
-              }
-            }
-          })
-        );
-      }, 500);
-      return () => clearInterval(interval);
-    }
-  }, [gameOver, maze]);
-
-  // Check for collision with enemies
-  useEffect(() => {
-    if (
-      enemies.some(
-        (enemy) => enemy.x === player.x && enemy.y === player.y
-      )
-    ) {
-      alert('Game Over! You were caught by an enemy.');
-      setGameOver(true);
-    }
-  }, [player, enemies]);
-
-  // Update canvas size when maze changes
-  useEffect(() => {
-    if (canvasRef.current && maze.length > 0) {
-      const canvas = canvasRef.current;
-      canvas.width = maze[0].length * tileSize;
-      canvas.height = maze.length * tileSize;
-    }
-  }, [maze]);
-
-  // Restart game
+  // ---------------------------
+  // Restart Game Function
+  // ---------------------------
   const restartGame = () => {
-    setLevel(0);
     setScore(0);
-    setTimer(0);
+    setLives(3);
+    setPlayerPosition({ x: window.innerWidth / 2 - 25, y: window.innerHeight - 100 }); // Center player
+    setProjectiles([]);
+    setEnemies([]);
     setGameOver(false);
-    // Re-initialize maze, player, enemies
-    const currentLevel = levels[0];
-    setMaze(currentLevel.mazeData);
-    setEnemies(currentLevel.enemies);
-    setPlayer({ x: 1, y: 1 });
-    setVisibility(currentLevel.mazeData.map((row) => row.map(() => false)));
-    setCollectedItems(0);
+    setCanShoot(true);
+    setKeysPressed({
+      ArrowLeft: false,
+      ArrowRight: false,
+    });
+    console.log('Game restarted');
   };
 
+  // ---------------------------
+  // Handle Shoot Button Click
+  // ---------------------------
+  const handleShoot = useCallback(() => {
+    if (canShoot && !gameOver) {
+      fireProjectile();
+    }
+  }, [canShoot, gameOver, fireProjectile]);
+
+  // ---------------------------
+  // Render Components
+  // ---------------------------
   return (
-    <div className="game-container">
-      <canvas ref={canvasRef} className="game-canvas"></canvas>
-      <div className="hud">
-        <p>Time: {timer}s</p>
-        <p>Score: {score}</p>
-        <p>Level: {level + 1}</p>
-      </div>
-      {gameOver && (
-        <div className="game-over">
-          <h1>{level >= levels.length ? 'You Win!' : 'Game Over'}</h1>
-          <p>Your time: {timer} seconds</p>
-          <p>Your score: {score}</p>
-          <button onClick={restartGame}>Play Again</button>
-        </div>
+    <div className="game-container" ref={gameContainerRef}>
+      <Starfield />
+      <ScoreBoard score={score} lives={lives} />
+      <Player position={playerPosition} />
+      {projectiles.map((proj, idx) => (
+        <Projectile key={idx} position={proj} />
+      ))}
+      {enemies.map((enemy) => (
+        <Enemy key={enemy.id} position={enemy} />
+      ))}
+      {gameOver && <GameOver score={score} onRestart={restartGame} />}
+      {/* On-Screen Shoot Button */}
+      {!gameOver && (
+        <button
+          className={`shoot-button ${!canShoot ? 'disabled' : ''}`}
+          onClick={handleShoot}
+          disabled={!canShoot}
+          aria-label="Shoot Projectile"
+        >
+          Shoot
+        </button>
       )}
     </div>
   );
-}
+};
 
 export default Game;

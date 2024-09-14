@@ -1,0 +1,12 @@
+/* src/components/ScoreBoard.css */
+
+.scoreboard {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive; /* Optional pixel font */
+    z-index: 1;
+  }
+  

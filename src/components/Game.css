@@ -1,42 +1,323 @@
 /* src/components/Game.css */
+
+/* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Game Container */
 .game-container {
   position: relative;
-  width: fit-content;
-  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* Prevent enemies from showing outside the container */
+  background-color: black; /* Dark background for space theme */
+  padding: 0; /* Remove any default padding */
+  margin: 0; /* Remove any default margin */
 }
 
-.game-canvas {
-  display: block;
-  border: 1px solid #555;
-  image-rendering: pixelated;
-}
-
-.hud {
-  margin-top: 10px;
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-}
-
-.game-over {
+/* Starfield Background */
+.starfield-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  font-family: 'Press Start 2P', cursive;
+  z-index: -3; /* Lower than other elements */
+}
+
+/* Scoreboard */
+.scoreboard {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  color: white;
+  font-size: 2vw; /* Responsive font size */
+  font-family: 'Press Start 2P', cursive; /* Optional pixel font */
+  z-index: 1;
+}
+
+/* Player */
+.player {
+  position: absolute;
+  z-index: 2;
+  width: 5vw; /* Responsive width */
+  height: 5vw; /* Responsive height */
+  min-width: 40px; /* Minimum size to ensure visibility on small screens */
+  min-height: 40px;
+  max-width: 80px; /* Maximum size to prevent excessive scaling */
+  max-height: 80px;
+}
+
+/* Enemy */
+.enemy {
+  position: absolute;
+  z-index: 2;
+  width: 6vw; /* Responsive width */
+  height: 6vw; /* Responsive height */
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 90px;
+  max-height: 90px;
+}
+
+/* Projectile */
+.projectile {
+  position: absolute;
+  z-index: 2;
+  width: 0.5vw; /* Responsive width */
+  height: 1vw; /* Responsive height */
+  min-width: 3px;
+  min-height: 6px;
+  max-width: 8px;
+  max-height: 16px;
+  background-color: yellow;
+  border-radius: 2px; /* Slightly rounded edges */
+}
+
+/* Game Over Overlay */
+.gameover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 4;
+  padding: 5%;
 }
 
-.game-over h1 {
-  margin-bottom: 20px;
+/* Game Over Content */
+.gameover-content {
+  text-align: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
 }
 
-.game-over button {
-  padding: 10px 20px;
-  font-size: 16px;
+.gameover-content h1 {
+  font-size: 4vw; /* Responsive font size */
+  margin-bottom: 2vh;
+}
+
+.gameover-content p {
+  font-size: 2.5vw;
+  margin-bottom: 3vh;
+}
+
+.gameover-content button {
+  padding: 1vh 3vw;
+  font-size: 2vw;
+  background-color: #3700ff; /* Preserved color choice */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.gameover-content button:hover {
+  background-color: #e60000; /* Preserved color choice */
+}
+
+.gameover-content button:active {
+  transform: scale(0.95);
+}
+
+/* Shoot Button */
+.shoot-button {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  padding: 1vh 2vw;
+  font-size: 2vw;
+  background-color: #3700ff; /* Preserved color choice */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Make it circular for better touch targets */
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.1s;
+  width: 8vw;
+  height: 8vw;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 80px;
+  max-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shoot-button:hover {
+  opacity: 1;
+}
+
+.shoot-button:active {
+  transform: scale(0.95);
+}
+
+.shoot-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Adjustments Using Media Queries */
+
+/* Tablets and Small Desktops */
+@media (max-width: 1024px) {
+  .scoreboard {
+    font-size: 2.5vw;
+    top: 10%; /* Adjusted to maintain position */
+  }
+
+  .player {
+    width: 6vw;
+    height: 6vw;
+  }
+
+  .enemy {
+    width: 7vw;
+    height: 7vw;
+  }
+
+  .projectile {
+    width: 0.7vw;
+    height: 1.5vw;
+  }
+
+  .gameover-content h1 {
+    font-size: 5vw;
+  }
+
+  .gameover-content p {
+    font-size: 3vw;
+  }
+
+  .gameover-content button {
+    font-size: 2.5vw;
+    padding: 1.2vh 3vw;
+  }
+
+  .shoot-button {
+    width: 10vw;
+    height: 10vw;
+    font-size: 2.5vw;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 600px) {
+  .scoreboard {
+    font-size: 3.5vw;
+    top: 15%; /* Adjusted to move scoreboard higher for smaller screens */
+    left: 3%;
+  }
+
+  .player {
+    width: 8vw;
+    height: 8vw;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+  .enemy {
+    width: 8vw;
+    height: 8vw;
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+  .projectile {
+    width: 0.8vw;
+    height: 2vw;
+    min-width: 4px;
+    min-height: 8px;
+    max-width: 10px;
+    max-height: 20px;
+  }
+
+  .gameover-content h1 {
+    font-size: 6vw;
+  }
+
+  .gameover-content p {
+    font-size: 4vw;
+  }
+
+  .gameover-content button {
+    font-size: 3vw;
+    padding: 1.5vh 4vw;
+  }
+
+  .shoot-button {
+    width: 12vw;
+    height: 12vw;
+    font-size: 3vw;
+  }
+}
+
+/* Extra Small Mobile Devices */
+@media (max-width: 400px) {
+  .scoreboard {
+    font-size: 4.5vw;
+    top: 2%;
+    left: 2%;
+  }
+
+  .player {
+    width: 10vw;
+    height: 10vw;
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .enemy {
+    width: 10vw;
+    height: 10vw;
+    min-width: 70px;
+    min-height: 70px;
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .projectile {
+    width: 1vw;
+    height: 2.5vw;
+    min-width: 5px;
+    min-height: 10px;
+    max-width: 12px;
+    max-height: 25px;
+  }
+
+  .gameover-content h1 {
+    font-size: 7vw;
+  }
+
+  .gameover-content p {
+    font-size: 5vw;
+  }
+
+  .gameover-content button {
+    font-size: 3.5vw;
+    padding: 1.8vh 5vw;
+  }
+
+  .shoot-button {
+    width: 14vw;
+    height: 14vw;
+    font-size: 3.5vw;
+  }
 }
