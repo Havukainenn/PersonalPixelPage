@@ -29,7 +29,7 @@ function Portfolio() {
       description: 'An old-school themed portfolio website built with React, showcasing projects with pixelated designs and space-themed animations.',
       image: '/images/portfolio.png',
       liveLink: 'https://your-live-link.com/retro-portfolio',
-      sourceLink: 'https://github.com/Havukainenn',
+      sourceLink: 'https://github.com/Havukainenn/PersonalPixelPage',
       technologies: ['React', 'CSS3', 'Framer Motion', 'React Router'],
     },
     // Add more projects as needed
@@ -45,7 +45,7 @@ function Portfolio() {
 
   return (
     <div className="portfolio-container">
-      <h1>Some of my work</h1>
+      <h1>Some of my work (more WIP)</h1>
       <h2>Click to expand</h2>
       <div className="projects-grid">
         {projects.map((project, index) => (
