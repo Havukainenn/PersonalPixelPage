@@ -1,7 +1,0 @@
-.enemy img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Ensures the image maintains aspect ratio */
-    transform: rotate(180deg); /* Rotates the image by 180 degrees */
-  }

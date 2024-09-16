@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './Home.css';  // Ensure you style it correctly
+import TypingIntroduction from './TypingIntroduction'; // Import the TypingIntroduction
 
 function Home() {
   const navigate = useNavigate(); // Hook to navigate between routes
@@ -9,14 +10,7 @@ function Home() {
   return (
     <div className="home-container">
       <h1>WELCOME</h1>
-      <p>Click that button to play a game, or use the navigation to explore</p>
-      <div className="astronaut-container">
-        <img src="/images/astro.png" alt="Astronaut" className="astronaut-image" />
-        {/* Add the button with navigation to the game */}
-        <button className="action-button" onClick={() => navigate('/game')}>
-          PLAY
-        </button>
-      </div>
+      <TypingIntroduction /> {/* Add the TypingIntroduction */}
     </div>
   );
 }

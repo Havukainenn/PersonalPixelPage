@@ -28,7 +28,8 @@
   margin: 0 auto;
   margin-top: 100px;
   margin-bottom: 50px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+  transform: scale(1.05); /* Permanently scaled up */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Permanent shadow for depth */
 }
 
 /* Monitor Image */
@@ -36,6 +37,8 @@
   width: 100%;
   height: auto;
   image-rendering: pixelated; /* Keep the retro pixelated look */
+  border: 3px solid #3700ff; /* Permanent glowing retro blue border */
+  box-shadow: 0px 0px 10px #3700ff, 0px 0px 20px #3700ff; /* Permanent glow effect */
 }
 
 /* Monitor Text */
@@ -44,7 +47,7 @@
   top: 15%; /* Adjust as needed */
   left: 10%;
   width: 80%;
-  color: black; /* Text color for contrast */
+  color: rgb(255, 255, 255); /* Text color for contrast */
   font-family: 'Press Start 2P', cursive;
   font-size: 14px;
   text-align: center;
@@ -58,18 +61,6 @@
 .monitor-text p {
   font-size: 12px;
   line-height: 1.5;
-}
-
-/* Hover Effect for Monitor Container */
-.monitor-container:hover {
-  transform: scale(1.05); /* Slight scaling on hover */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Add a shadow for depth */
-}
-
-/* Glowing border effect */
-.monitor-container:hover .monitor-image {
-  border: 3px solid #3700ff; /* Add glowing retro blue border on hover */
-  box-shadow: 0px 0px 10px #3700ff, 0px 0px 20px #3700ff; /* Glow effect */
 }
 
 /* Astronaut container */
@@ -232,7 +223,6 @@
   color: black;
 }
 
-
 /* Responsive adjustments for large screens */
 @media (min-width: 1200px) {
   .about-me {
@@ -270,14 +260,6 @@
   .billboard-container {
     margin-top: 2200px;
   }
-}
-
-/* Balloon Style (text bubble) */
-.balloon {
-  position: absolute;
-  top: -90px; /* Adjust position above the doge image */
-  left: 60px; /* Adjust horizontal placement */
-  z-index: 3;
 }
 
 /* Responsive adjustments for small screens */
@@ -337,5 +319,4 @@
   .billboard-header {
     display: none;
   }
-
 }

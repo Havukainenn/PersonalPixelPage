@@ -1,0 +1,52 @@
+/* src/components/LoadingScreen.css */
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #3700ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 9999;
+  }
+  
+  .pixel-bar {
+    width: 200px;
+    height: 20px;
+    border: 2px solid #3700ff;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    background-color: #1a1a2e; /* Optional: Adds a background color to the progress bar */
+  }
+  
+  .pixel-progress {
+    width: 0;
+    height: 100%;
+    background-color: #3700ff;
+    animation: loadBar 3s forwards;
+  }
+  
+  @keyframes loadBar {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .loading-container h1 {
+      font-size: 24px;
+    }
+  
+    .pixel-bar {
+      width: 150px;
+      height: 15px;
+    }
+  }
+  

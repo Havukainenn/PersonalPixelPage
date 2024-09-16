@@ -1,0 +1,11 @@
+/* src/components/TypingIntroduction.css */
+
+.typing-container {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ffffff;
+
+    font-family: 'Press Start 2P', cursive;
+    min-height: 40px; /* To prevent layout shift during typing */
+  }
+  
