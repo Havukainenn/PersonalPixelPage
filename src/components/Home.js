@@ -1,13 +1,12 @@
-// src/components/Home.js
 import React from 'react';
-import './Home.css';  // Ensure you style it correctly
-import TypingIntroduction from './TypingIntroduction'; // Import the TypingIntroduction
+import './Home.css';  
+import TypingIntroduction from './TypingIntroduction'; 
 
 function Home() {
   return (
     <div className="home-container">
       <h1>WELCOME</h1>
-      <TypingIntroduction /> {/* Add the TypingIntroduction */}
+      <TypingIntroduction /> 
     </div>
   );
 }

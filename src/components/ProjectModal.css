@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.85); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     position: relative;
     color: white;
     font-family: 'Press Start 2P', cursive;
-    box-shadow: 0 0 20px rgba(55, 0, 255, 0.5); /* Added shadow */
+    box-shadow: 0 0 20px rgba(55, 0, 255, 0.5); 
     animation: slideIn 0.5s forwards;
   }
   
@@ -36,26 +36,25 @@
     }
   }
   
-  /* Close button - retro style, no circle */
   .close-button {
     position: absolute;
     top: 10px;
     right: 15px;
-    background: none; /* Remove background */
-    border: none; /* No border */
-    color: #ffffff; /* White color for the X */
-    font-size: 30px; /* Larger size for better visibility */
+    background: none; 
+    border: none; 
+    color: #ffffff; 
+    font-size: 30px;
     cursor: pointer;
     padding: 0;
-    text-shadow: 2px 2px #3700ff; /* Retro shadow effect */
+    text-shadow: 2px 2px #3700ff; 
     line-height: 1;
-    transition: color 0.2s, transform 0.2s; /* Transition for hover */
+    transition: color 0.2s, transform 0.2s; 
     image-rendering: pixelated;
   }
   
   .close-button:hover {
-    color: #ff0000; /* Change to red on hover */
-    transform: scale(1.1); /* Slight scaling */
+    color: #ff0000; 
+    transform: scale(1.1); 
   }
   
   .modal-image {
@@ -98,7 +97,6 @@
     margin-right: 10px;
   }
   
-  /* Responsive improvements for mobile */
   @media (max-width: 768px) {
     .modal-content {
       padding: 20px;
@@ -126,7 +124,6 @@
       font-size: 8px;
     }
   
-    /* Adjust close button for smaller screens */
     .close-button {
       font-size: 24px;
       top: 5px;

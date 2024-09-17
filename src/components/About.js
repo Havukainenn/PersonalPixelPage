@@ -24,7 +24,6 @@ function About() {
     <div className="about-page">
       <div className="about-container">
 
-        {/* Introduction Section */}
         <section className="about-section">
           <div
             className="section-header"
@@ -46,7 +45,6 @@ function About() {
           </div>
         </section>
 
-        {/* Skills Section */}
         <section className="skills-section">
           <div
             className="section-header"
@@ -80,7 +78,6 @@ function About() {
           </div>
         </section>
 
-        {/* Contact Section */}
 <section className="contact-section">
   <div
     className="section-header"

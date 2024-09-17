@@ -6,12 +6,12 @@ import About from './components/About';
 import Portfolio from './components/Portfolio';
 import Navbar from './components/Navbar';
 import Starfield from './components/Starfield';
-import LoadingScreen from './components/LoadingScreen'; // Import LoadingScreen
+import LoadingScreen from './components/LoadingScreen'; 
 import { AnimatePresence, motion } from 'framer-motion';
 import './App.css';
 
 function AnimatedRoutes() {
-  const location = useLocation(); // Get the current location
+  const location = useLocation(); 
 
   return (
     <AnimatePresence mode="wait">
@@ -55,35 +55,32 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
-        {/* Add more routes as needed */}
       </Routes>
     </AnimatePresence>
   );
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true); // Initialize loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
-    // Simulate a loading time (e.g., 3 seconds)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000); // 3000 milliseconds = 3 seconds
 
-    return () => clearTimeout(timer); // Clean up the timer on unmount
+    return () => clearTimeout(timer); 
   }, []);
 
   return (
     <Router>
       <div className="App">
-        {/* Render LoadingScreen if isLoading is true */}
         {isLoading ? (
           <LoadingScreen />
         ) : (
           <>
-            <Starfield /> {/* Background Starfield */}
-            <Navbar /> {/* Navigation */}
-            <AnimatedRoutes /> {/* Route handling with animations */}
+            <Starfield /> 
+            <Navbar /> 
+            <AnimatedRoutes /> 
           </>
         )}
       </div>

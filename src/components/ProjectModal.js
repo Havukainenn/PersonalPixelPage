@@ -1,4 +1,3 @@
-// src/components/ProjectModal.js
 import React from 'react';
 import './ProjectModal.css';
 import { motion } from 'framer-motion';

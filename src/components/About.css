@@ -1,7 +1,5 @@
-/* Import Pixel Font */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* Root Variables for Consistent Theming */
 :root {
   --primary-color: #3700ff;
   --text-color: #ffffff;
@@ -10,7 +8,7 @@
   --transition-speed: 0.3s;
 }
 
-/* General Styles */
+
 body {
   font-family: var(--font-family);
   background-color: transparent;
@@ -21,8 +19,8 @@ body {
 
 .about-page {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center;     /* Center vertically */
+  justify-content: center; 
+  align-items: center;    
   padding: 40px 20px;
   min-height: 100vh;
   box-sizing: border-box;
@@ -30,23 +28,23 @@ body {
 
 .about-container {
   width: 100%;
-  max-width: 800px; /* Adjust as needed */
+  max-width: 800px; 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;
   gap: 40px;
-  justify-items: center; /* Center items horizontally */
+  justify-items: center; 
 }
 
 .about-section,
 .skills-section,
 .contact-section {
   width: 100%;
-  max-width: 600px; /* Adjust as needed */
-  text-align: center; /* Center text inside sections */
+  max-width: 600px; 
+  text-align: center; 
 }
 
-/* Section Header Styles */
+
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -58,7 +56,7 @@ body {
 
 .section-header h2 {
   font-size: 18px;
-  color: var(--text-color); /* Set headers to white */
+  color: var(--text-color);
   margin: 0;
   text-shadow: 1px 1px #000;
 }
@@ -69,12 +67,10 @@ body {
   transition: transform var(--transition-speed);
 }
 
-/* Rotate Toggle Sign When Open */
 .section-header[aria-expanded="true"] .toggle-sign {
   transform: rotate(180deg);
 }
 
-/* Section Content Styles */
 .section-content {
   max-height: 0;
   opacity: 0;
@@ -87,12 +83,11 @@ body {
 }
 
 .section-content.open {
-  max-height: 500px; /* Adjust as needed */
+  max-height: 500px; 
   opacity: 1;
   padding-top: 10px;
 }
 
-/* Text Content */
 .section-content p {
   font-size: 14px;
   color: var(--text-color);
@@ -108,14 +103,13 @@ body {
   text-decoration: underline;
 }
 
-/* Skills List Styling */
 .skills-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the skills list */
+  justify-content: center; 
   gap: 10px;
 }
 
@@ -138,23 +132,21 @@ body {
   transform: scale(1.05);
 }
 
-/* Contact Section Styling */
 .contact-item {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center items horizontally */
+  justify-content: center; 
   margin-bottom: 10px;
 }
 
 .contact-item i {
-  margin-right: 15px; /* Space between icon and text */
+  margin-right: 15px; 
   color: var(--text-color);
 }
 
-/* Adjust font size for contact-value and links inside it */
 .contact-value,
 .contact-value a {
-  font-size: 12px; /* Adjust as needed */
+  font-size: 12px; 
   color: var(--text-color);
 }
 

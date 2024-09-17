@@ -19,14 +19,13 @@ html, body {
 
 .App {
   text-align: center;
-  width: 100%;  /* Set the width to 100% to avoid restriction */
-  max-width: 100%;  /* Remove max-width limitation */
+  width: 100%;  
+  max-width: 100%; 
   margin: 0 auto;
   padding-top: 20px;
   min-height: 100vh;
 }
 
-/* Page transitions */
 .page {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -36,7 +35,6 @@ html, body {
   opacity: 1;
 }
 
-/* Welcome Text Styles */
 h1 {
   font-size: 36px;
   margin-top: 0;

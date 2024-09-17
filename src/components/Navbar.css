@@ -1,7 +1,6 @@
-/* Reset for Nav */
 nav {
-    background: none !important; /* Ensure background is removed */
-    background-color: transparent !important; /* Force it to be transparent */
+    background: none !important; 
+    background-color: transparent !important; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,28 +10,28 @@ nav {
     left: 0;
     width: 100%;
     z-index: 10;
-    font-family: 'Press Start 2P', cursive;  /* Retro pixelated font */
+    font-family: 'Press Start 2P', cursive;  
     font-size: 16px;
     color: white;
   }
   
-  /* Navigation list */
+
   nav ul {
     display: flex;
     justify-content: space-between;
-    width: 100%;  /* Ensure items are spread across the entire width */
+    width: 100%;  
     padding: 0;
     margin: 0;
-    list-style: none;  /* Remove bullets */
+    list-style: none;  
   }
   
-  /* Individual nav items */
+
   nav ul li {
     flex-grow: 1;
-    text-align: center;  /* Center text */
+    text-align: center;  
   }
   
-  /* Links inside the navbar */
+
   nav ul li a {
     color: white;
     text-decoration: none;
@@ -41,13 +40,13 @@ nav {
     display: block;
   }
   
-  /* Hover effect for links */
+
   nav ul li a:hover {
-    color: #3700ff;  /* Change to retro orange on hover */
+    color: #3700ff;  
     text-decoration: underline;
   }
   
-  /* Space added to body to avoid overlap from the fixed nav */
+
   body {
     padding-top: 60px;
   }

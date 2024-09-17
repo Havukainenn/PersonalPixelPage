@@ -1,6 +1,5 @@
-// src/components/TypingIntroduction.js
 import React from 'react';
-import { ReactTyped } from 'react-typed'; // Correct named import
+import { ReactTyped } from 'react-typed'; 
 import './TypingIntroduction.css';
 
 const TypingIntroduction = () => {

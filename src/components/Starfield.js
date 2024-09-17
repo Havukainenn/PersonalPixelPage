@@ -1,4 +1,3 @@
-// src/components/Starfield.js
 import React, { useEffect, useState } from 'react';
 import './Starfield.css';
 
@@ -6,20 +5,20 @@ const Starfield = () => {
   const [stars, setStars] = useState([]);
 
   useEffect(() => {
-    const starCount = 100; // Number of stars
+    const starCount = 100;
     const starsArray = [];
 
     for (let i = 0; i < starCount; i++) {
-      const size = Math.floor(Math.random() * 3 + 1);  // Random size for each star
+      const size = Math.floor(Math.random() * 3 + 1);  
       starsArray.push({
         id: i,
         size: size,
-        top: Math.random() * 100,  // Random vertical position
-        left: Math.random() * 100, // Random horizontal position
+        top: Math.random() * 100,  
+        left: Math.random() * 100, 
       });
     }
 
-    setStars(starsArray);  // Store the star data in state
+    setStars(starsArray); 
   }, []);
 
   return (
@@ -36,8 +35,6 @@ const Starfield = () => {
           }}
         />
       ))}
-
-      {/* Planets */}
       <img src="/images/planet1.png" alt="Planet 1" className="planet planet1" />
       <img src="/images/planet2.png" alt="Planet 2" className="planet planet2" />
       <img src="/images/planet3.png" alt="Planet 3" className="planet planet3" />

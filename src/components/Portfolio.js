@@ -1,8 +1,7 @@
-// src/components/Portfolio.js
 import React, { useState } from 'react';
 import './Portfolio.css';
-import ProjectModal from './ProjectModal'; // Import the ProjectModal component
-import { motion } from 'framer-motion'; // Import Framer Motion for animations
+import ProjectModal from './ProjectModal'; 
+import { motion } from 'framer-motion'; 
 
 function Portfolio() {
   const [selectedProject, setSelectedProject] = useState(null); // State to manage the selected project
@@ -32,7 +31,6 @@ function Portfolio() {
       sourceLink: 'https://github.com/Havukainenn/PersonalPixelPage',
       technologies: ['React', 'CSS3', 'Framer Motion', 'React Router'],
     },
-    // Add more projects as needed
   ];
 
   const handleProjectClick = (project) => {
