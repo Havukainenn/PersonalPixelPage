@@ -41,7 +41,7 @@ function About() {
           <div className={`section-content ${isIntroductionOpen ? 'open' : ''}`} id="introduction-content">
             <p>
             Hello! I'm Roope, a 24-year old aspiring IT engineering student from Helsinki, passionate 
-            about web development, programming, and all things in IT. I love learning new technologies and applying my skills to create innovative solutions. I thrive in collaborative environments, enjoy tackling complex problems, and believe that teamwork is key to driving meaningful change.
+            about web development, programming, and all things in ITnp. I love learning new technologies and applying my skills to create innovative solutions. I thrive in collaborative environments, enjoy tackling complex problems, and believe that teamwork is key to driving meaningful change.
             </p>
           </div>
         </section>
@@ -98,7 +98,7 @@ function About() {
     <div className="contact-item">
       <i className="nes-icon gmail is-small"></i>
       <span className="contact-value">
-        <a href="mailto:roopehavukainen@outlook.com">‎roopehavukainen@outlook.com</a>
+        <a href="mailto:roopehavukainen@outlook.com">‎ roopehavukainen@outlook.com</a>
       </span>
     </div>
     <div className="contact-item">
