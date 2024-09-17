@@ -1,322 +1,206 @@
-/* Main container for the about page */
-.about-page {
-  position: relative;
-  min-height: 300vh;
+/* Import Pixel Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Root Variables for Consistent Theming */
+:root {
+  --primary-color: #3700ff;
+  --text-color: #ffffff;
+  --hover-color: #ffde00;
+  --font-family: 'Press Start 2P', cursive;
+  --transition-speed: 0.3s;
+}
+
+/* General Styles */
+body {
+  font-family: var(--font-family);
   background-color: transparent;
-  overflow-x: hidden;
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
 }
 
-/* About container */
-.about-container {
+.about-page {
   display: flex;
-  justify-content: center; /* Center align the contents */
-  align-items: flex-start;
-  flex-wrap: wrap;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
   padding: 40px 20px;
-  color: white;
-  font-family: 'Press Start 2P', cursive;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.about-container {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto; /* Center the container */
+  max-width: 800px; /* Adjust as needed */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 40px;
+  justify-items: center; /* Center items horizontally */
 }
 
-/* Monitor Container */
-.monitor-container {
-  position: relative;
-  width: 100%; /* Full width for responsiveness */
-  max-width: 500px; /* Adjust size to match the image */
-  margin: 0 auto;
-  margin-top: 100px;
-  margin-bottom: 50px;
-  transform: scale(1.05); /* Permanently scaled up */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Permanent shadow for depth */
-}
-
-/* Monitor Image */
-.monitor-image {
+.about-section,
+.skills-section,
+.contact-section {
   width: 100%;
-  height: auto;
-  image-rendering: pixelated; /* Keep the retro pixelated look */
-  border: 3px solid #3700ff; /* Permanent glowing retro blue border */
-  box-shadow: 0px 0px 10px #3700ff, 0px 0px 20px #3700ff; /* Permanent glow effect */
+  max-width: 600px; /* Adjust as needed */
+  text-align: center; /* Center text inside sections */
 }
 
-/* Monitor Text */
-.monitor-text {
-  position: absolute;
-  top: 15%; /* Adjust as needed */
-  left: 10%;
-  width: 80%;
-  color: rgb(255, 255, 255); /* Text color for contrast */
-  font-family: 'Press Start 2P', cursive;
-  font-size: 14px;
-  text-align: center;
+/* Section Header Styles */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
 }
 
-.monitor-text h2 {
+.section-header h2 {
   font-size: 18px;
-  margin-bottom: 10px;
+  color: var(--text-color); /* Set headers to white */
+  margin: 0;
+  text-shadow: 1px 1px #000;
 }
 
-.monitor-text p {
-  font-size: 12px;
-  line-height: 1.5;
+.toggle-sign {
+  font-size: 18px;
+  color: var(--text-color);
+  transition: transform var(--transition-speed);
 }
 
-/* Astronaut container */
-.astro-container {
-  text-align: center;
-  margin-top: 40px;
+/* Rotate Toggle Sign When Open */
+.section-header[aria-expanded="true"] .toggle-sign {
+  transform: rotate(180deg);
 }
 
-/* Astronaut Image */
-.astro-image {
-  width: 200px;
-  height: auto;
-  image-rendering: pixelated;
-  animation: float 4s ease-in-out infinite;
-}
-
-/* Scroll text */
-.scroll-text {
-  color: white;
-  margin-top: 10px;
-  font-size: 16px;
-  font-family: 'Press Start 2P', cursive;
-}
-
-/* Sky background transition */
-.sky-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, #87CEEB, #f5f5dc);
-  z-index: -1;
+/* Section Content Styles */
+.section-content {
+  max-height: 0;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  overflow: hidden;
+  transition:
+    max-height var(--transition-speed) ease-out,
+    opacity var(--transition-speed) ease-out,
+    padding var(--transition-speed) ease-out;
+  padding-top: 0;
 }
 
-/* Sun and Clouds */
-.sky-content {
-  position: absolute;
-  top: 270vh;
+.section-content.open {
+  max-height: 500px; /* Adjust as needed */
+  opacity: 1;
+  padding-top: 10px;
 }
 
-.sun {
-  position: absolute;
-  margin-top: 200px;
-  margin-left: 100px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  filter: none;
-  z-index: -1;
+/* Text Content */
+.section-content p {
+  font-size: 14px;
+  color: var(--text-color);
 }
 
-.cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6 {
-  position: absolute;
-  width: 120px;
-  animation: bobClouds 10s ease-in-out infinite;
-  z-index: -1;
-}
-
-/* Adjust positions for clouds */
-.cloud1 { top: 100px; left: 100px; }
-.cloud2 { top: 120px; left: 250px; }
-.cloud3 { top: 140px; left: 400px; }
-.cloud4 { top: 160px; left: 550px; }
-.cloud5 { top: 150px; left: 1200px; }
-.cloud6 { top: 200px; left: 1400px; }
-
-/* Floating animation for astronaut */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Bobbing animation for clouds */
-@keyframes bobClouds {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Billboard Container */
-.billboard-container {
-  position: relative;
-  width: 500px;
-  margin: 0 auto;
-  margin-top: 1800px;
-  margin-bottom: 50px;
-}
-
-.billboard-image {
-  width: 100%;
-  height: auto;
-  image-rendering: pixelated;
-}
-
-.billboard-text {
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  width: 80%;
-  color: white;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 13px;
-  text-align: start;
-}
-
-.billboard-header {
-  text-align: center;
-}
-
-.billboard-text a {
-  color: white;
+.section-content a {
+  color: var(--text-color);
   text-decoration: none;
 }
 
-.billboard-text a:hover {
+.section-content a:hover {
+  color: var(--hover-color);
   text-decoration: underline;
 }
 
-/* Ground Element */
-.ground {
-  background-repeat: repeat-x;
-  background-size: contain;
-  height: 50px;
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
+/* Skills List Styling */
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the skills list */
+  gap: 10px;
 }
 
-/* Doge Container on the Ground */
-.doge-container {
-  position: absolute;
-  bottom: 20px;  /* Adjust this value to set distance from bottom */
-  left: 10%;  /* Center horizontally */
-  transform: translateX(-50%);
-  z-index: 2;
-}
-
-.doge-image {
-  width: 100px;  /* Adjust size as necessary */
-  height: auto;
-  image-rendering: pixelated;
-}
-
-/* Balloon Style (text bubble) */
-.balloon {
-  position: absolute;
-  top: -110px; /* Adjust position above the doge image */
-  left: 60px; /* Adjust horizontal placement */
-  z-index: 3;
-}
-
-.nes-balloon p {
-  font-family: 'Press Start 2P', cursive;
+.skills-list li {
+  background-color: rgba(55, 0, 255, 0.2);
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 5px 10px;
   font-size: 12px;
-  color: black;
+  transition:
+    background-color var(--transition-speed),
+    transform var(--transition-speed),
+    color var(--transition-speed);
+  cursor: pointer;
 }
 
-/* Responsive adjustments for large screens */
-@media (min-width: 1200px) {
-  .about-me {
-    width: 45%;
-  }
-
-  .astro-container {
-    width: 45%;
-  }
-
-  .billboard-container {
-    margin-top: 2500px;
-  }
+.skills-list li:hover {
+  background-color: var(--primary-color);
+  color: #1a1a2e;
+  transform: scale(1.05);
 }
 
-/* Responsive adjustments for medium screens */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .about-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .about-me {
-    width: 80%;
-    max-width: 450px;
-    margin: 20px auto;
-  }
-
-  .astro-container {
-    width: 80%;
-    max-width: 450px;
-    margin: 20px auto;
-  }
-
-  .billboard-container {
-    margin-top: 2200px;
-  }
+/* Contact Section Styling */
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center items horizontally */
+  margin-bottom: 10px;
 }
 
-/* Responsive adjustments for small screens */
+.contact-item i {
+  margin-right: 15px; /* Space between icon and text */
+  color: var(--text-color);
+}
+
+/* Adjust font size for contact-value and links inside it */
+.contact-value,
+.contact-value a {
+  font-size: 12px; /* Adjust as needed */
+  color: var(--text-color);
+}
+
+.contact-value a {
+  text-decoration: none;
+}
+
+.contact-value a:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .about-container {
+    gap: 30px;
+  }
+
+  .section-header h2,
+  .toggle-sign {
+    font-size: 16px;
+  }
+
+  .section-content p {
+    font-size: 12px;
+  }
+
+  .skills-list li {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+
+  /* Contact Section Responsive Styling */
+  .contact-item {
     flex-direction: column;
     align-items: center;
+    text-align: center;
   }
 
-  .about-me {
-    width: 100%;
-    max-width: 250px;
-    margin: 20px auto;
-  }
-  .monitor-text {
-    font-size: 12px; /* Smaller font size for smaller screens */
-    padding: 5px; /* Adjust padding to fit text within container */
+  .contact-item i {
+    margin-right: 0;
+    margin-bottom: 5px;
   }
 
-  .monitor-text p {
-    font-size: 9px;
-  }
-
-  .monitor-container {
-    max-width: 400px;
-  }
-  .astro-image {
-    width: 150px;
-  }
-
-  .scroll-text {
+  .contact-value,
+  .contact-value a {
     font-size: 14px;
-  }
-
-  .sky-content {
-    top: 240vh;
-  }
-
-  .sun, .cloud1, .cloud2, .cloud3, .cloud4, .cloud5, .cloud6 {
-    width: 100px;
-  }
-
-  .billboard-container {
-    width: 300px;
-    margin-top: 2000px;
-  }
-
-  .billboard-text {
-    margin-top: -11px;
-    font-size: 8px;
-  }
-
-  .balloon {
-    display: none;
-  }
-
-  .billboard-header {
-    display: none;
   }
 }

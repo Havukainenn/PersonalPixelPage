@@ -1,87 +1,130 @@
-import React, { useState, useEffect } from 'react';
-import './About.css';  // Import the CSS file
+import React, { useState } from 'react';
+import './About.css';
 
 function About() {
-  const [scrollY, setScrollY] = useState(0);
+  // State to manage visibility of each section
+  const [isIntroductionOpen, setIsIntroductionOpen] = useState(false);
+  const [isSkillsOpen, setIsSkillsOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
-  const handleScroll = () => {
-    setScrollY(window.scrollY);
+  // Handlers to toggle sections
+  const toggleIntroduction = () => {
+    setIsIntroductionOpen(!isIntroductionOpen);
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+  const toggleSkills = () => {
+    setIsSkillsOpen(!isSkillsOpen);
+  };
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const toggleContact = () => {
+    setIsContactOpen(!isContactOpen);
+  };
 
   return (
-    <div className="about-page wrapper">
+    <div className="about-page">
       <div className="about-container">
-        
-        {/* About Me Section inside a Monitor */}
-        <div className="monitor-container">
-          <img src="/images/monitor.png" alt="Monitor" className="monitor-image" />
-          <div className="monitor-text">
-            <h2>About Me</h2>
+
+        {/* Introduction Section */}
+        <section className="about-section">
+          <div
+            className="section-header"
+            onClick={toggleIntroduction}
+            role="button"
+            aria-expanded={isIntroductionOpen}
+            aria-controls="introduction-content"
+          >
+            <h2>
+              <span className="emoji">👽</span> Who am I?
+            </h2>
+            <span className="toggle-sign">{isIntroductionOpen ? '-' : '+'}</span>
+          </div>
+          <div className={`section-content ${isIntroductionOpen ? 'open' : ''}`} id="introduction-content">
             <p>
-              Hi! I'm Roope, an aspiring IT-engineering student passionate about web development, mobile apps, and all tech in general. 
-              I enjoy learning new technologies and applying my skills to create innovative solutions.
+            Hello! I'm Roope, a 24-year old aspiring IT engineering student from Helsinki, passionate 
+            about web development, programming, and all things in IT. I love learning new technologies and applying my skills to create innovative solutions. I thrive in collaborative environments, enjoy tackling complex problems, and believe that teamwork is key to driving meaningful change.
             </p>
           </div>
-        </div>
+        </section>
 
-        {/* Astronaut and Scroll Message */}
-        <div className="astro-container">
-          <img src="/images/astro2.png" alt="Astronaut" className="astro-image" />
-          <p className="scroll-text">Scroll down for more!</p>
-        </div>
-      </div>
-
-      {/* Sky background that fades in on scroll */}
-      <div
-        className="sky-background"
-        style={{
-          opacity: scrollY > 300 ? 1 : 0,
-          transition: 'opacity 1s ease-in-out',
-        }}
-      />
-
-      {/* Sun and Clouds in their fixed position */}
-      <div className="sky-content">
-        <img src="/images/sun.png" alt="Sun" className="sun" />
-        <img src="/images/cloud1.png" alt="Cloud 1" className="cloud cloud1" />
-        <img src="/images/cloud2.png" alt="Cloud 2" className="cloud cloud2" />
-        <img src="/images/cloud3.png" alt="Cloud 3" className="cloud cloud3" />
-        <img src="/images/cloud4.png" alt="Cloud 4" className="cloud cloud4" />
-        <img src="/images/cloud5.png" alt="Cloud 5" className="cloud cloud5" />
-        <img src="/images/cloud6.png" alt="Cloud 6" className="cloud cloud6" />
-      </div>
-
-      {/* Billboard with Contact Info */}
-      <div className="billboard-container">
-        <img src="/images/billboard.png" alt="Billboard" className="billboard-image" />
-        <div className="billboard-text">
-          <p className="billboard-header"></p> 
-          <p><i className="nes-icon gmail is-small"></i> roopehavukainen@outlook.com</p>
-          <p><i className="nes-icon whatsapp is-small"></i> +358-408-240-055</p>
-          <p><i className="nes-icon linkedin is-small"></i> <a href="https://www.linkedin.com/in/roope-havukainen" target="_blank" rel="noopener noreferrer">linkedin.com/in/roope</a></p>
-          <p><i className="nes-icon github is-small"></i> <a href="https://github.com/Havukainenn" target="_blank" rel="noopener noreferrer">github.com/Havukainenn</a></p>
-        </div>
-      </div>
-
-      {/* Ground Element with Doge and Balloon */}
-      <div className="ground" style={{ backgroundImage: "url('/images/ground.png')" }}>
-        {/* Doge image placed on the ground */}
-        <div className="doge-container">
-          <img src="/images/doge.png" alt="Doge" className="doge-image" />
-
-          {/* Balloon (text bubble) for Doge */}
-          <div className="nes-balloon from-left balloon">
-            <p>Contact me!</p>
+        {/* Skills Section */}
+        <section className="skills-section">
+          <div
+            className="section-header"
+            onClick={toggleSkills}
+            role="button"
+            aria-expanded={isSkillsOpen}
+            aria-controls="skills-content"
+          >
+            <h2>
+              <span className="emoji">✏️</span> What can I do?
+            </h2>
+            <span className="toggle-sign">{isSkillsOpen ? '-' : '+'}</span>
           </div>
-        </div>
+          <div className={`section-content ${isSkillsOpen ? 'open' : ''}`} id="skills-content">
+            <ul className="skills-list">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>React</li>
+              <li>Node.js</li>
+              <li>Python</li>
+              <li>Django</li>
+              <li>C#</li>
+              <li>MySQL</li>
+              <li>Linux</li>
+              <li>Windows</li>
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>Microsoft 365</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+<section className="contact-section">
+  <div
+    className="section-header"
+    onClick={toggleContact}
+    role="button"
+    aria-expanded={isContactOpen}
+    aria-controls="contact-content"
+  >
+    <h2>
+              <span className="emoji">📞</span> Want to contact me?
+            </h2>
+    <span className="toggle-sign">{isContactOpen ? '-' : '+'}</span>
+  </div>
+  <div className={`section-content ${isContactOpen ? 'open' : ''}`} id="contact-content">
+    <div className="contact-item">
+      <i className="nes-icon gmail is-small"></i>
+      <span className="contact-value">
+        <a href="mailto:roopehavukainen@outlook.com">‎roopehavukainen@outlook.com</a>
+      </span>
+    </div>
+    <div className="contact-item">
+      <i className="nes-icon whatsapp is-small"></i>
+      <span className="contact-value">‎ +358-408-240-055</span>
+    </div>
+    <div className="contact-item">
+      <i className="nes-icon linkedin is-small"></i>
+      <span className="contact-value">
+        <a href="https://www.linkedin.com/in/roope-havukainen" target="_blank" rel="noopener noreferrer">
+        ‎ linkedin.com/in/roope-havukainen
+        </a>
+      </span>
+    </div>
+    <div className="contact-item">
+      <i className="nes-icon github is-small"></i>
+      <span className="contact-value">
+        <a href="https://github.com/Havukainenn" target="_blank" rel="noopener noreferrer">
+        ‎ github.com/Havukainenn
+        </a>
+      </span>
+    </div>
+  </div>
+</section>
+
+
       </div>
     </div>
   );

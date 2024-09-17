@@ -28,7 +28,7 @@ function Portfolio() {
       title: 'Retro Portfolio Website',
       description: 'An old-school themed portfolio website built with React, showcasing projects with pixelated designs and space-themed animations.',
       image: '/images/portfolio.png',
-      liveLink: 'https://your-live-link.com/retro-portfolio',
+      liveLink: 'https://havukainen.netlify.app/',
       sourceLink: 'https://github.com/Havukainenn/PersonalPixelPage',
       technologies: ['React', 'CSS3', 'Framer Motion', 'React Router'],
     },
