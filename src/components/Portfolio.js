@@ -24,12 +24,12 @@ function Portfolio() {
       technologies: ['JavaScript', 'HTML5', 'CSS3'],
     },
     {
-      title: 'Retro Portfolio Website',
-      description: 'An old-school themed portfolio website built with React, showcasing projects with pixelated designs and space-themed animations.',
-      image: '/images/portfolio.png',
-      liveLink: 'https://havukainen.netlify.app/',
-      sourceLink: 'https://github.com/Havukainenn/PersonalPixelPage',
-      technologies: ['React', 'CSS3', 'Framer Motion', 'React Router'],
+      title: 'NextJS Website',
+      description: 'NextJS mock-up website for a business',
+      image: '/images/orange.png',
+      liveLink: 'https://ojstudios.netlify.app',
+      sourceLink: 'https://github.com/Havukainenn/orangeJuiceMockUp',
+      technologies: ['NextJS', 'Typescript', 'Tailwind', 'Framer-Motion'],
     },
   ];
 
