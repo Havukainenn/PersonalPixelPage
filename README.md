@@ -9,3 +9,5 @@ To-do:
 -Fix responsiveness on very small screens
 
 -Polish image loading
+
+https://havukainen.netlify.app/
